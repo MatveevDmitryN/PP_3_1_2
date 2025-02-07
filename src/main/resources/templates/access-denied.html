@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Доступ запрещен</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+        }
+
+        p {
+            font-size: 16px;
+            color: #555;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            color: #0275d8;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: 2px solid #0275d8;
+            border-radius: 4px;
+            background-color: #fff;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0275d8;
+            color: white;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            p {
+                font-size: 14px;
+            }
+
+            .btn {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Доступ запрещен</h2>
+    <p>У вас нет прав для доступа к этой странице.</p>
+    <a href="/" class="btn" aria-label="Перейти на главную">Перейти на главную</a>
+    <a href="/login" class="btn" aria-label="Войти в систему">Войти в систему</a>
+</div>
+</body>
+</html>

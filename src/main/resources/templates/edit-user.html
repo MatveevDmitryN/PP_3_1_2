@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактировать пользователя</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-size: 16px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .roles-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .role-item {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Редактировать пользователя</h2>
+    <form th:action="@{/admin/edit-user}" method="post" th:object="${user}">
+
+        <!-- ID (нельзя редактировать) -->
+        <div class="form-group">
+            <label for="id">ID</label>
+            <input type="text" id="id" th:field="*{id}" readonly>
+        </div>
+
+        <!-- Имя пользователя (теперь можно редактировать) -->
+        <div class="form-group">
+            <label for="username">Имя пользователя</label>
+            <input type="text" id="username" th:field="*{username}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="firstName">Имя</label>
+            <input type="text" id="firstName" th:field="*{firstName}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">Фамилия</label>
+            <input type="text" id="lastName" th:field="*{lastName}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" th:field="*{email}" required>
+        </div>
+
+        <!-- Пароль теперь после email -->
+        <div class="form-group">
+            <label for="password">Пароль</label>
+            <input type="password" id="password" th:field="*{password}">
+            <small>Оставьте пустым, если не хотите менять пароль.</small>
+        </div>
+
+        <div class="form-group">
+            <label for="age">Возраст</label>
+            <input type="number" id="age" th:field="*{age}" required>
+        </div>
+
+        <!-- Выбор ролей (вернул возможность редактирования) -->
+        <div class="form-group">
+            <label>Роли</label>
+            <div class="roles-container">
+                <div class="role-item" th:each="role : ${roles}">
+                    <input type="checkbox" th:id="'role_' + ${role.id}" th:name="roles" th:value="${role.id}"
+                           th:checked="${user.roles.contains(role)}">
+                    <label th:for="'role_' + ${role.id}" th:text="${role.name}"></label>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit">Сохранить изменения</button>
+    </form>
+
+    <div th:if="${errorMessage}" class="error-message">
+        <p th:text="${errorMessage}"></p>
+    </div>
+</div>
+
+</body>
+</html>

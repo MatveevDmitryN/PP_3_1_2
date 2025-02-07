@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить нового пользователя</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-size: 16px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .roles-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .role-item {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Добавить нового пользователя</h2>
+    <form action="/admin/add" method="post">
+
+        <div class="form-group">
+            <label for="username">Имя пользователя</label>
+            <input type="text" id="username" name="username" required minlength="3" th:value="${user.username}">
+        </div>
+
+        <div class="form-group">
+            <label for="firstName">Имя</label>
+            <input type="text" id="firstName" name="firstName" required th:value="${user.firstName}">
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">Фамилия</label>
+            <input type="text" id="lastName" name="lastName" required th:value="${user.lastName}">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required th:value="${user.email}">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Пароль</label>
+            <input type="password" id="password" name="password" required minlength="5">
+        </div>
+
+        <div class="form-group">
+            <label for="age">Возраст</label>
+            <input type="number" id="age" name="age" required th:value="${user.age}">
+        </div>
+
+        <div class="form-group">
+            <label>Роли</label>
+            <div class="roles-container">
+                <div class="role-item" th:each="role : ${roles}">
+                    <input type="checkbox" th:id="'role_' + ${role.id}" name="roles" th:value="${role.id}">
+                    <label th:for="'role_' + ${role.id}" th:text="${role.name}"></label>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit">Добавить пользователя</button>
+    </form>
+
+    <div th:if="${errorMessage}" class="error-message">
+        <p th:text="${errorMessage}"></p>
+    </div>
+</div>
+
+</body>
+</html>

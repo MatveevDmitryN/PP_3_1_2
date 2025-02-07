@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Your Company or Name">
+    <meta name="description" content="Admin panel to manage users and roles">
+    <title>Admin Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        header h2 {
+            font-size: 18px;
+            margin: 5px 0;
+        }
+
+        section {
+            width: 80%;
+            max-width: 1200px;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .add-button {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .add-button:hover {
+            background-color: #45a049;
+        }
+
+        table.user-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table.user-table th,
+        table.user-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table.user-table th {
+            background-color: #f4f4f4;
+            color: #555;
+        }
+
+        table.user-table td a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        table.user-table td a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 15px;
+            background-color: #333;
+            color: white;
+            position: absolute;
+            bottom: 0;
+        }
+
+        footer .logout-button {
+            padding: 10px 20px;
+            background-color: #f44336;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        footer .logout-button:hover {
+            background-color: #e53935;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Admin Panel</h1>
+    <h2>Logged in as: <span th:text="${admin.username}"></span></h2>
+</header>
+
+<section>
+    <h3>All Users</h3>
+
+    <a href="/admin/create" class="add-button">Add New User</a>
+
+    <table class="user-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Second Name</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>Roles</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${#lists.isEmpty(users)}">
+            <td colspan="8" style="text-align: center;">Нет пользователей</td>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.firstName}"></td>
+            <td th:text="${user.lastName}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.age}"></td>
+            <td>
+                <span th:each="role : ${user.roles}" th:text="${role.name}"></span>
+            </td>
+            <td>
+                <a th:href="@{/admin/edit-user/{id}(id=${user.id})}">Edit</a> |
+                <a th:href="@{/admin/delete/{id}(id=${user.id})}">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+
+<footer>
+    <form action="/logout" method="post" style="display: inline;">
+        <button type="submit" class="logout-button">Logout</button>
+    </form>
+</footer>
+
+</body>
+</html>
